@@ -42,16 +42,19 @@
         </nav>-->
         <?php include 'nav.php';?>
         <div class="text-center jumbotron bg-img">
-            <h1>The smartest weather application built!</h1>
-            <h4>Leveraging the power of mathematics with historical data, WeatherWonder is the MOST accurate weather application built! If you want your forecast enter your Zip Code Here: </h4>
+            <div class = "container">
+                <h1>The smartest weather application built!</h1>
+                <h4>Leveraging the power of mathematics with historical data, WeatherWonder is the MOST accurate weather application built! If you want your forecast enter your Zip Code Here: </h4>
             
-            <div class="control-group form-horizontal col-md-offset-5 col-xs-offset-3 col-md-2 col-xs-6" id="zipDiv">
-                <form  id = "zipForm" name = "zipForm" action="/weatherInPhp.php" method = "GET" onsubmit = >
-                  <label for="zipCode">Zip Code:</label>
-                  <input type="text" class="form-control" name = "zipCode" id="zipCode">
-                  <button type = "submit" id = "zipBTN" name = "zipBTN" class = "btn btn-primary"  style = "margin-top:1em">Submit</button>
-              </form>
             </div>
+                <div class="control-group form-horizontal col-md-offset-5 col-xs-offset-3 col-md-2 col-xs-6" id="zipDiv">
+                    <form  id = "zipForm" name = "zipForm" action="/weatherInPhp.php" method = "GET" onsubmit = >
+                      <label for="zipCode">Zip Code:</label>
+                      <input type="text" class="form-control" name = "zipCode" id="zipCode">
+                      <button type = "submit" id = "zipBTN" name = "zipBTN" class = "btn btn-primary"  style = "margin-top:1em">Submit</button>
+                    </form>
+                </div>
+            
         </div>
         <div class="container" id="homeText">
             <h2 class = "text-center">About this project:</h2>
