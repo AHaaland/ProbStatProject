@@ -49,3 +49,31 @@ body {
 .weather-container{
    margin-top:1em;
 }
+/*CSS for current weather blocks*/
+.currentSummary{
+   display:inline-block;
+   vertical-align:middle;
+}
+.tempCurrent{
+   margin-left:1em;
+   display:inline-block;
+   vertical-align:middle;
+}
+/*Ahaaland - Mobile/Tablet inquiry fix CSS*/
+@media only screen and (min-width: 769px) {
+.detailedCurrent{
+   margin-left:10em;
+   display:inline-block;
+   vertical-align:middle;
+   }
+
+}
+
+@media only screen and (max-width: 768px) {
+.detailedCurrent{
+   margin-left:0px;
+   display:inline-block;
+   vertical-align:middle;
+   }
+
+}

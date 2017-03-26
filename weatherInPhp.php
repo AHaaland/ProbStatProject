@@ -31,11 +31,25 @@
                     <h4><?php echo $currentCondAry->{'current_observation'}->{'display_location'}->{'full'}?></h4>
                 </div>
                 <div class = "panel-body">
-                    <div class = "currentSummary pull-left">
+                    <div class = "currentSummary ">
                         <!-- aligns image centered over text-->
                         <img style = "margin:auto; display:block;" src = "<?php echo $currentCondAry->{'current_observation'}->{'icon_url'}?>" alt = "<?php echo $currentCondAry->{'current_observation'}->{'icon'}?>">
                         <p style = "text-align:center;"><?php echo $currentCondAry->{'current_observation'}->{'weather'}?></p>
-                        
+                    </div>
+                    <div class="tempCurrent ">
+                        <p style = "margin-bottom:0px;"><b>Temperature:</b></p>
+                        <h2 style = "margin-top:0px;margin-bottom:0px;"><?php echo $currentCondAry->{'current_observation'}->{'temperature_string'}?></h2>
+                        <p style = "margin-bottom:0px;"><b>Feels Like:</b></p>
+                        <h3 style = "margin-top:0px;margin-bottom:0px"><?php echo $currentCondAry->{'current_observation'}->{'feelslike_string'}?></h3>
+                    </div>
+                    <div class="detailedCurrent ">
+                        <p style = "margin-bottom:0px;"><b>Humidity: <?php echo $currentCondAry->{'current_observation'}->{'relative_humidity'}?></b></p>
+                        <p style = "margin-bottom:0px;"><b>Wind: <?php echo $currentCondAry->{'current_observation'}->{'wind_string'}." ".$currentCondAry->{'current_observation'}->{'wind_dir'}." ".$currentCondAry->{'current_observation'}->{'wind_mph'}." mph"?></b></p>
+                        <p style = "margin-bottom:0px;"><b>Barometer: <?php echo $currentCondAry->{'current_observation'}->{'pressure_in'}." in (".$currentCondAry->{'current_observation'}->{'pressure_mb'}." mb)" ?></b></p>
+                        <p style = "margin-bottom:0px;"><b>Dew Point: <?php echo $currentCondAry->{'current_observation'}->{'dewpoint_string'}?></b></p>
+                        <p style = "margin-bottom:0px;"><b>Visibility: <?php echo $currentCondAry->{'current_observation'}->{'visibility_mi'}." mi"?></b></p>
+                        <p style = "margin-bottom:0px;"><b>Observation Time: <?php echo $currentCondAry->{'current_observation'}->{'observation_time'}?></b></p>
+                        <p style = "margin-bottom:0px;"><b>Station of Observation: <?php echo $currentCondAry->{'current_observation'}->{'station_id'}?></b></p>
                     </div>
                 </div>
             </div>
@@ -62,11 +76,11 @@
                     if($countEven++ %2 != 1)
                     {
                         echo "<div class = 'panel panel-default'><div class ='panel-body'><div class = 'media'><div class = 'media-left media-middle'><img class = 'media-object' src = '".$dailyData->{'icon_url'}."' alt = '".$dailyData->{'icon'}."'></div>" ;
-                        echo "<div class = 'media-body'>".$dailyData ->{'title'}." <br>".$dailyData->{'fcttext'}." <br> Chance of percipitation: ".$dailyData->{'pop'}."%</div></div></div></div>";
+                        echo "<div class = 'media-body'><b>".$dailyData ->{'title'}."</b> <br>".$dailyData->{'fcttext'}." <br> Chance of percipitation: ".$dailyData->{'pop'}."%</div></div></div></div>";
                     }
                     else {
                         echo "<div class = 'panel panel-default wellEffect'><div class ='panel-body'><div class = 'media'><div class = 'media-left media-middle'><img class = 'media-object' src = '".$dailyData->{'icon_url'}."' alt = '".$dailyData->{'icon'}."'></div>" ;
-                        echo "<div class = 'media-body'>".$dailyData ->{'title'}." <br>".$dailyData->{'fcttext'}." <br> Chance of percipitation: ".$dailyData->{'pop'}."%</div></div></div></div>";
+                        echo "<div class = 'media-body'><b>".$dailyData ->{'title'}."</b> <br>".$dailyData->{'fcttext'}." <br> Chance of percipitation: ".$dailyData->{'pop'}."%</div></div></div></div>";
                             
                     }
                 }
