@@ -47,6 +47,7 @@
                 <h4>Leveraging the power of mathematics with historical data, WeatherWonder is the MOST accurate weather application built! If you want your forecast enter your Zip Code Here: </h4>
             
             </div>
+            <!-- Removing 'name' attribute will force the field to not be submitted! -->
                 <div class="control-group form-horizontal col-md-offset-5 col-xs-offset-3 col-md-2 col-xs-6" id="zipDiv">
                     <form  id = "zipForm" name = "zipForm" action="/weatherInPhp.php" method = "GET" onsubmit = >
                       <label for="zipCode">Zip Code:</label>

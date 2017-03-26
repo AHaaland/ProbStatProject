@@ -3,9 +3,9 @@ html{
   position: relative;
   min-height: 100%;
 }
-/*Used for footer push*/
+/*Used for footer push, should be =, extra gives more spacing*/
 body {
-  margin-bottom:120px;
+  margin-bottom:140px;
 }
 /*Used for Jumbotron BG*/
 .bg-img{
@@ -16,7 +16,7 @@ body {
    url(/Images/changing-weather.jpg) no-repeat center;
    background-position: 100% 72%;
    color:white;
-   height: 35em;
+   height: 40em;
    padding-top: 9em;
    margin-bottom: 2em;
 }
