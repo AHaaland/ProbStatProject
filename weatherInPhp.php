@@ -14,11 +14,9 @@
             
         <?php
                 //gets JSON from WUndeground API, gets weather by ZIP from POST on index, decodes JSON for use later
-                $forecastJSON = file_get_contents('http://api.wunderground.com/api/45bd656b25491a92/geolookup/forecast10day/q/'.$_GET['zipCode'].'.json');
+                $forecastJSON = file_get_contents('http://api.wunderground.com/api/45bd656b25491a92/geolookup/forecast10day/conditions/q/'.$_GET['zipCode'].'.json');
                 $weatherAry = json_decode($forecastJSON);
                 $weekForecast = $weatherAry->{'forecast'}->{'txt_forecast'};
-                $currentCondJSON = file_get_contents('http://api.wunderground.com/api/45bd656b25491a92/conditions/q/'.$_GET['zipCode'].'.json');
-                $currentCondAry = json_decode($currentCondJSON);
         ?>
         
 
@@ -28,28 +26,28 @@
             <div id="currentConditions" class = "panel panel-default">
                 <div class = "panel-heading">
                     <b>Current Conditions in:</b>
-                    <h4><?php echo $currentCondAry->{'current_observation'}->{'display_location'}->{'full'}?></h4>
+                    <h4><?php echo $weatherAry->{'current_observation'}->{'display_location'}->{'full'}?></h4>
                 </div>
                 <div class = "panel-body">
                     <div class = "currentSummary ">
                         <!-- aligns image centered over text-->
-                        <img style = "margin:auto; display:block;" src = "<?php echo $currentCondAry->{'current_observation'}->{'icon_url'}?>" alt = "<?php echo $currentCondAry->{'current_observation'}->{'icon'}?>">
-                        <p style = "text-align:center;"><?php echo $currentCondAry->{'current_observation'}->{'weather'}?></p>
+                        <img style = "margin:auto; display:block;" src = "<?php echo $weatherAry->{'current_observation'}->{'icon_url'}?>" alt = "<?php echo $weatherAry->{'current_observation'}->{'icon'}?>">
+                        <p style = "text-align:center;"><?php echo $weatherAry->{'current_observation'}->{'weather'}?></p>
                     </div>
                     <div class="tempCurrent ">
                         <p style = "margin-bottom:0px;"><b>Temperature:</b></p>
-                        <h2 style = "margin-top:0px;margin-bottom:0px;"><?php echo $currentCondAry->{'current_observation'}->{'temperature_string'}?></h2>
+                        <h2 style = "margin-top:0px;margin-bottom:0px;"><?php echo $weatherAry->{'current_observation'}->{'temperature_string'}?></h2>
                         <p style = "margin-bottom:0px;"><b>Feels Like:</b></p>
-                        <h3 style = "margin-top:0px;margin-bottom:0px"><?php echo $currentCondAry->{'current_observation'}->{'feelslike_string'}?></h3>
+                        <h3 style = "margin-top:0px;margin-bottom:0px"><?php echo $weatherAry->{'current_observation'}->{'feelslike_string'}?></h3>
                     </div>
                     <div class="detailedCurrent ">
-                        <p style = "margin-bottom:0px;"><b>Humidity: <?php echo $currentCondAry->{'current_observation'}->{'relative_humidity'}?></b></p>
-                        <p style = "margin-bottom:0px;"><b>Wind: <?php echo $currentCondAry->{'current_observation'}->{'wind_string'}." ".$currentCondAry->{'current_observation'}->{'wind_dir'}." ".$currentCondAry->{'current_observation'}->{'wind_mph'}." mph"?></b></p>
-                        <p style = "margin-bottom:0px;"><b>Barometer: <?php echo $currentCondAry->{'current_observation'}->{'pressure_in'}." in (".$currentCondAry->{'current_observation'}->{'pressure_mb'}." mb)" ?></b></p>
-                        <p style = "margin-bottom:0px;"><b>Dew Point: <?php echo $currentCondAry->{'current_observation'}->{'dewpoint_string'}?></b></p>
-                        <p style = "margin-bottom:0px;"><b>Visibility: <?php echo $currentCondAry->{'current_observation'}->{'visibility_mi'}." mi"?></b></p>
-                        <p style = "margin-bottom:0px;"><b>Observation Time: <?php echo $currentCondAry->{'current_observation'}->{'observation_time'}?></b></p>
-                        <p style = "margin-bottom:0px;"><b>Station of Observation: <?php echo $currentCondAry->{'current_observation'}->{'station_id'}?></b></p>
+                        <p style = "margin-bottom:0px;"><b>Humidity: <?php echo $weatherAry->{'current_observation'}->{'relative_humidity'}?></b></p>
+                        <p style = "margin-bottom:0px;"><b>Wind: <?php echo $weatherAry->{'current_observation'}->{'wind_string'}." ".$weatherAry->{'current_observation'}->{'wind_dir'}." ".$weatherAry->{'current_observation'}->{'wind_mph'}." mph"?></b></p>
+                        <p style = "margin-bottom:0px;"><b>Barometer: <?php echo $weatherAry->{'current_observation'}->{'pressure_in'}." in (".$weatherAry->{'current_observation'}->{'pressure_mb'}." mb)" ?></b></p>
+                        <p style = "margin-bottom:0px;"><b>Dew Point: <?php echo $weatherAry->{'current_observation'}->{'dewpoint_string'}?></b></p>
+                        <p style = "margin-bottom:0px;"><b>Visibility: <?php echo $weatherAry->{'current_observation'}->{'visibility_mi'}." mi"?></b></p>
+                        <p style = "margin-bottom:0px;"><b>Observation Time: <?php echo $weatherAry->{'current_observation'}->{'observation_time'}?></b></p>
+                        <p style = "margin-bottom:0px;"><b>Station of Observation: <?php echo $weatherAry->{'current_observation'}->{'station_id'}?></b></p>
                     </div>
                 </div>
             </div>
