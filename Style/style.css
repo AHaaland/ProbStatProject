@@ -46,6 +46,6 @@ body {
    background-color:#f5f5f5;
 }
 /*Drops down forecast*/
-#forecastCont{
+.weather-container{
    margin-top:1em;
 }

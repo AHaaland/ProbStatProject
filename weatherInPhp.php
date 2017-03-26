@@ -14,11 +14,34 @@
             
         <?php
                 //gets JSON from WUndeground API, gets weather by ZIP from POST on index, decodes JSON for use later
-                $weatherJSON = file_get_contents('http://api.wunderground.com/api/45bd656b25491a92/geolookup/forecast10day/q/'.$_GET['zipCode'].'.json');
-                $weatherAry = json_decode($weatherJSON);
+                $forecastJSON = file_get_contents('http://api.wunderground.com/api/45bd656b25491a92/geolookup/forecast10day/q/'.$_GET['zipCode'].'.json');
+                $weatherAry = json_decode($forecastJSON);
                 $weekForecast = $weatherAry->{'forecast'}->{'txt_forecast'};
+                $currentCondJSON = file_get_contents('http://api.wunderground.com/api/45bd656b25491a92/conditions/q/'.$_GET['zipCode'].'.json');
+                $currentCondAry = json_decode($currentCondJSON);
         ?>
-        <div class="container" id="forecastCont">
+        
+
+        
+        <div class="weather-container container">
+            
+            <div id="currentConditions" class = "panel panel-default">
+                <div class = "panel-heading">
+                    <b>Current Conditions in:</b>
+                    <h4><?php echo $currentCondAry->{'current_observation'}->{'display_location'}->{'full'}?></h4>
+                </div>
+                <div class = "panel-body">
+                    <div class = "currentSummary pull-left">
+                        <!-- aligns image centered over text-->
+                        <img style = "margin:auto; display:block;" src = "<?php echo $currentCondAry->{'current_observation'}->{'icon_url'}?>" alt = "<?php echo $currentCondAry->{'current_observation'}->{'icon'}?>">
+                        <p style = "text-align:center;"><?php echo $currentCondAry->{'current_observation'}->{'weather'}?></p>
+                        
+                    </div>
+                </div>
+            </div>
+        
+            
+            
                 <div id = "forecast" class="panel panel-default">
                 <div class ="panel-heading">
                     <b>Forecast For:</b>
