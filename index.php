@@ -51,7 +51,7 @@
                     <form  id = "zipForm" name = "zipForm" action="/weatherInPhp.php" method = "GET" onsubmit = >
                       <label for="zipCode">Zip Code:</label>
                       <input type="text" class="form-control" name = "zipCode" id="zipCode">
-                      <button type = "submit" id = "zipBTN" name = "zipBTN" class = "btn btn-primary"  style = "margin-top:1em">Submit</button>
+                      <button type = "submit" id = "zipBTN"class = "btn btn-primary"  style = "margin-top:1em">Submit</button>
                     </form>
                 </div>
             
