@@ -14,14 +14,68 @@
             
         <?php
                 //gets JSON from WUndeground API, gets weather by ZIP from POST on index, decodes JSON for use later
-                $forecastJSON = file_get_contents('http://api.wunderground.com/api/45bd656b25491a92/geolookup/forecast10day/conditions/q/'.$_GET['zipCode'].'.json');
+                $forecastJSON = file_get_contents('http://api.wunderground.com/api/45bd656b25491a92/geolookup/forecast10day/conditions/alerts/q/'.$_GET['zipCode'].'.json');
                 $weatherAry = json_decode($forecastJSON);
                 $weekForecast = $weatherAry->{'forecast'}->{'txt_forecast'};
         ?>
         
-
         
         <div class="weather-container container">
+            
+            <?php /*  ***** ALERT FEATURE CODE BASE, NOT WORKING $alertType is array of alerts ******
+                $alertType = $weatherAry->{'alerts'}->{'significance'};
+                var_dump($alertType);
+                if($alertType == 'W' || $alertType == 'Y' || $alertType == 'A' || $alertType == 'S')
+                {
+                    if ($alertType == 'Y' || $alertType == 'A')
+                    {
+                        echo "<div id='stormAlert' class = 'panel panel-warning'>";
+                    }
+                    else if($alertType == 'W')
+                    {
+                        echo "<div id='stormAlert' class = 'panel panel-danger'>";
+                    }
+                    else 
+                    {
+                        echo "<div id='stormAlert' class - 'panel panel-info'>";
+                    }
+                    
+                        echo "<div class = 'panel-heading'>";
+                        echo "<b>".$weatherAry->{'alerts'}->{'type'}."</b>";
+                    
+                    
+                }
+                 */   
+                 
+                 $hasAlert = false;
+                 foreach ($weatherAry->{'alerts'} as $weatherAlerts)
+                 {
+                     if($weatherAlerts -> {'significance'} != null)
+                     {
+                         $hasAlert = true;
+                         
+                     }
+                 }
+                     if($hasAlert)
+                     {
+                         echo "<div id='stormAlert' class = 'panel panel-danger'>";
+                            echo "<div class = 'panel-heading text-center'>";
+                                echo "<b>Hazardous Weather Conditions</b>";
+                            echo "</div>";
+                            echo "<div class = 'panel-body'>";
+                            foreach ($weatherAry->{'alerts'} as $weatherAlerts)
+                            {
+                                
+                                echo "<ul>";
+                                    echo "<li>".$weatherAlerts -> {'description'}." Unitl ".$weatherAlerts -> {'expires'}."</li>";
+                                echo "</ul>";
+                                
+                            }
+                            echo "</div>";
+                            echo "</div>";
+                     }
+                 
+            ?>
             
             <div id="currentConditions" class = "panel panel-default">
                 <div class = "panel-heading">
@@ -87,6 +141,10 @@
             </div>
 
         </div>
+        
+        <script type = "text/javascript">
+            
+        </script>
     <?php require 'footer.php';?>
     </body>
 </html>
