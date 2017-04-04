@@ -12,7 +12,7 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav">
             <li ><a href="index.php">Home</a></li>
-            <li><a href="weatherTest1.php">Test</a></li>
+            <li><a href="historicalDump.php">History Dump</a></li>
           </ul>
           <div class="navbar-right">
               <p class="navbar-text ">Hello, Guest!</p>
