@@ -24,7 +24,7 @@
         </div>    
         <?php 
         //MY SERVER LOGIN FOR MYSQL
-        $dbhost = 'localhost:3036';
+        $dbhost = 'localhost';
         $dbuser = 'WeatherWonderSaveUse';
         $dbpass = 'Password$12321*';
    
