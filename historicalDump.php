@@ -29,7 +29,7 @@
         $dbpass = '12321';*/
         
         $dbhost = 'localhost';
-        $dbuser = 'WeatherWonderSaveUse';
+        $dbuser = 'weatherWonderSaveUser';
         $dbpass = 'Password$12321*';
         
    
