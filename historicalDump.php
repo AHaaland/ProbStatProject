@@ -24,14 +24,31 @@
         </div>    
         <?php 
         //MY SERVER LOGIN FOR MYSQL
-        $mysqli = new mysqli("localhost", "WeatherWonderSaveUse", 'Password$12321*', "weatherWonder");
-        $query = "SELECT * FROM OldWeather";
-        $result = mysqli_query($mysqli, $query);
-        $row = mysqli_fetch_array($result);
-        while($row = mysqli_fetch_array($result))
-        {
+        $dbhost = 'localhost:3036';
+        $dbuser = 'WeatherWonderSaveUse';
+        $dbpass = 'Password$12321*';
+   
+        $conn = mysql_connect($dbhost, $dbuser, $dbpass);
+   
+        if(! $conn ) {
+             die('Could not connect: ' . mysql_error());
+        }
+   
+        $sql = 'SELECT * FROM OldWeather';
+        mysql_select_db('weatherWonder');
+        $retval = mysql_query( $sql, $conn );
+   
+        if(! $retval ) {
+        die('Could not get data: ' . mysql_error());
+        }
+   
+        while($row = mysql_fetch_array($retval, MYSQL_ASSOC)) {
             echo $row['OldWeatherTime'];
         }
+   
+        echo "Fetched data successfully\n";
+   
+        mysql_close($conn);
         ?>
         
         
