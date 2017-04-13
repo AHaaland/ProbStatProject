@@ -31,9 +31,10 @@
         $dbhost = 'localhost';
         $dbuser = 'weatherWonderSaveUser';
         $dbpass = 'Password$12321*';
+        $dbDatabase = 'weatherWonder';
         
    
-        $conn = mysqli_connect($dbhost, $dbuser, $dbpass);
+        /*$conn = mysqli_connect($dbhost, $dbuser, $dbpass);
    
         if(! $conn ) {
              die('Could not connect: ' . mysqli_error());
@@ -53,7 +54,15 @@
    
         echo "Fetched data successfully\n";
    
-        mysqli_close($conn);
+        mysqli_close($conn);*/
+        
+        $mysqli = new mysqli($dbhost,$dbuser,$dbpass,$dbDatabse);
+        $result = $mysqli->query("SELECT * FROM OldWeather");
+        $row = $result->fetch_assoc();
+        echo htmlentities($row['OldWeatherTime']);
+        
+        
+        
         ?>
         
         
