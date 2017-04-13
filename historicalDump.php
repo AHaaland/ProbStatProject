@@ -26,8 +26,10 @@
         //c9 login
         /*$dbhost = 'localhost';
         $dbuser = 'n02762252';
-        $dbpass = '12321';*/
-        
+        $dbpass = '12321';
+        $dbDatabase = 'oldForecast';
+        */
+        //myServ
         $dbhost = 'localhost';
         $dbuser = 'weatherWonderSaveUser';
         $dbpass = 'Password$12321*';
@@ -55,13 +57,31 @@
         echo "Fetched data successfully\n";
    
         mysqli_close($conn);*/
+
+
+        $mysqli = new mysqli($dbhost,$dbuser,$dbpass,$dbDatabase);
         
-        $mysqli = new mysqli($dbhost,$dbuser,$dbpass,$dbDatabse);
-        $result = $mysqli->query("SELECT * FROM OldWeather");
-        $row = $result->fetch_assoc();
-        echo htmlentities($row['OldWeatherTime']);
+                if ($mysqli->connect_error) {
+            die("Connection failed: " . $mysqli->connect_error);
+        } 
         
         
+        $result = $mysqli->query("SELECT * FROM OldWeather;");
+        if ($result->num_rows > 0) {
+        while($row = $result->fetch_assoc()) {
+            echo $row['OldWeatherTime'];
+        }
+        }
+        
+        else {
+            echo "nope!";
+                
+        }
+        
+        
+        
+        
+        $mysqli->close();
         
         ?>
         
