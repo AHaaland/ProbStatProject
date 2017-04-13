@@ -23,10 +23,15 @@
             ?>
         </div>    
         <?php 
-        //MY SERVER LOGIN FOR MYSQL
+        //c9 login
+        /*$dbhost = 'localhost';
+        $dbuser = 'n02762252';
+        $dbpass = '12321';*/
+        
         $dbhost = 'localhost';
         $dbuser = 'WeatherWonderSaveUse';
         $dbpass = 'Password$12321*';
+        
    
         $conn = mysql_connect($dbhost, $dbuser, $dbpass);
    
@@ -35,7 +40,7 @@
         }
    
         $sql = 'SELECT * FROM OldWeather';
-        mysql_select_db('weatherWonder');
+        mysql_select_db('oldForecast');
         $retval = mysql_query( $sql, $conn );
    
         if(! $retval ) {
