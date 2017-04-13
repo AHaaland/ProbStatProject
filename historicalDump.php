@@ -33,27 +33,27 @@
         $dbpass = 'Password$12321*';
         
    
-        $conn = mysql_connect($dbhost, $dbuser, $dbpass);
+        $conn = mysqli_connect($dbhost, $dbuser, $dbpass);
    
         if(! $conn ) {
              die('Could not connect: ' . mysql_error());
         }
    
         $sql = 'SELECT * FROM OldWeather';
-        mysql_select_db('oldForecast');
-        $retval = mysql_query( $sql, $conn );
+        mysqli_select_db('oldForecast');
+        $retval = mysqli_query( $sql, $conn );
    
         if(! $retval ) {
         die('Could not get data: ' . mysql_error());
         }
    
-        while($row = mysql_fetch_array($retval, MYSQL_ASSOC)) {
+        while($row = mysqli_fetch_array($retval, MYSQL_ASSOC)) {
             echo $row['OldWeatherTime'];
         }
    
         echo "Fetched data successfully\n";
    
-        mysql_close($conn);
+        mysqli_close($conn);
         ?>
         
         
