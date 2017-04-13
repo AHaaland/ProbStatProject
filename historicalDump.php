@@ -36,7 +36,7 @@
         $conn = mysqli_connect($dbhost, $dbuser, $dbpass);
    
         if(! $conn ) {
-             die('Could not connect: ' . mysql_error());
+             die('Could not connect: ' . mysqli_error());
         }
    
         $sql = 'SELECT * FROM OldWeather';
@@ -44,7 +44,7 @@
         $retval = mysqli_query( $sql, $conn );
    
         if(! $retval ) {
-        die('Could not get data: ' . mysql_error());
+        die('Could not get data: ' . mysqli_error());
         }
    
         while($row = mysqli_fetch_array($retval, MYSQL_ASSOC)) {
