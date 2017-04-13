@@ -11,12 +11,17 @@
     </head>
     <body>
         <?php require 'nav.php';?>
-        <?php
-            $historyXML = file_get_contents('http://api.wunderground.com/api/fb64d033ab87e1ee/history_20060405/q/12487.xml');
-            echo($historyXML);
-
-        ?>
-            
+        <div class = 'container'> 
+            <?php
+                $historyXML = simplexml_load_file('http://api.wunderground.com/api/fb64d033ab87e1ee/history_20060405/q/12487.xml');
+                echo('Observed weather on: '.$historyXML->history->dailysummary->summary->date->pretty);
+                echo('<br>');
+                echo('The observed mean temp on April 5, 2006 was: '.$historyXML->history->dailysummary->summary->meantempi." F");
+                echo('<br>');
+                echo('The observed high was: '.$historyXML->history->dailysummary->summary->maxtempi." F")
+    
+            ?>
+        </div>    
         
         
         
