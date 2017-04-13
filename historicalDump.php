@@ -24,7 +24,7 @@
         </div>    
         <?php 
         //MY SERVER LOGIN FOR MYSQL
-        $mysqli = new mysqli("localhost", "WeatherWonderSaveUse", "Password$12321*", "weatherWonder");
+        $mysqli = new mysqli("localhost", "WeatherWonderSaveUse", 'Password$12321*', "weatherWonder");
         $query = "SELECT * FROM OldWeather";
         $result = mysqli_query($mysqli, $query);
         $row = mysqli_fetch_array($result);
