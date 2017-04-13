@@ -23,6 +23,8 @@
             ?>
         </div>    
         <?php 
+        
+        ini_set('display_errors', 1); error_reporting(-1);
         //c9 login
         /*$dbhost = 'localhost';
         $dbuser = 'n02762252';
