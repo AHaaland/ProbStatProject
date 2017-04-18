@@ -151,10 +151,16 @@
                 // Database setup
                 ini_set('display_errors', 1); error_reporting(-1);
                 //c9 login
-                $dbhost = 'localhost';
+                /*$dbhost = 'localhost';
                 $dbuser = 'n02762252';
                 $dbpass = '12321';
-                $dbDatabase = 'oldForecast';
+                $dbDatabase = 'oldForecast';*/
+                
+                $dbhost = 'localhost';
+        $dbuser = 'weatherWonderSaveUser';
+        $dbpass = 'Password$12321*';
+        $dbDatabase = 'weatherWonder';
+        
                 
                 $mysqli = new mysqli($dbhost,$dbuser,$dbpass,$dbDatabase);
         
