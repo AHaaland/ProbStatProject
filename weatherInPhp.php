@@ -123,12 +123,18 @@
     
                 //loops through each day of the forecast, gets a primative forecast
                 $countEven = 0;
+                $highTempArray = [];
                 foreach($weekForecast->{'forecastday'} as $dailyData)
                 {
                     if($countEven++ %2 != 1)
                     {
                         echo "<div class = 'panel panel-default'><div class ='panel-body'><div class = 'media'><div class = 'media-left media-middle'><img class = 'media-object' src = '".$dailyData->{'icon_url'}."' alt = '".$dailyData->{'icon'}."'></div>" ;
                         echo "<div class = 'media-body'><b>".$dailyData ->{'title'}."</b> <br>".$dailyData->{'fcttext'}." <br> Chance of percipitation: ".$dailyData->{'pop'}."%</div></div></div></div>";
+                        
+                        if($countEven != 0) // In current test, first entry is not useful
+                        {
+                            $highTempArray[$countEven] = $dailyData ->{'fcttext'};
+                        }
                     }
                     else {
                         echo "<div class = 'panel panel-default wellEffect'><div class ='panel-body'><div class = 'media'><div class = 'media-left media-middle'><img class = 'media-object' src = '".$dailyData->{'icon_url'}."' alt = '".$dailyData->{'icon'}."'></div>" ;
@@ -138,6 +144,119 @@
                 }
             ?>
             </div>
+            
+            <div class="panel-body">
+                <?php //TEST: extraction of High temperature from string for each day
+                
+                // Database setup
+                ini_set('display_errors', 1); error_reporting(-1);
+                //c9 login
+                $dbhost = 'localhost';
+                $dbuser = 'n02762252';
+                $dbpass = '12321';
+                $dbDatabase = 'oldForecast';
+                
+                $mysqli = new mysqli($dbhost,$dbuser,$dbpass,$dbDatabase);
+        
+                if ($mysqli->connect_error) {
+                    die("Connection failed: " . $mysqli->connect_error);
+                }
+                
+                
+                
+                    $daysOut = 0;
+                    foreach ($highTempArray as $highTemp)
+                    {
+                        if ($daysOut == 0) {
+                            $todaysTemp = $weatherAry->{'current_observation'}->{'temperature_string'};
+                            //echo "RIGHT--HERE: ".intval(substr($todaysTemp, 0, strpos($todaysTemp, "F")));
+                            $todaysTemp = intval(substr($todaysTemp, 0, strpos($todaysTemp, "F")));
+                        }
+                        
+                        $loopDate = date('Y-m-d', strtotime('+'.$daysOut.' days', strtotime( date('Y-m-d') )));
+                        $leftString = substr( $highTemp, strpos( $highTemp, "High") + 4 );
+                        $isolatedTemp = substr( $leftString , 0, strpos( $leftString, "F") + 1 );
+                        $isolatedTemp = preg_replace( '/[^0-9]/', '', $isolatedTemp);
+                        echo "Isolated temp: ". $isolatedTemp .",  ##Num only: ". preg_replace( '/[^0-9]/', '', $isolatedTemp) .",  ##Days out: ". $daysOut .",  ##Date: ". $loopDate ."<br>"; // WILL WRITE INTEGER VALUE TO DATABASE for average calculation
+                        
+                        // Write to corresponding table for high temperature prediction
+                        if ($daysOut != 0) {
+                            $tableWrite = $mysqli->query("INSERT INTO ".$daysOut."dayOutHighTemps (date, temperature, comments) VALUES ('".$loopDate."', '".$isolatedTemp."', '' );");
+                        } else { // 0 days out is a special case because the formatting is a little different of the string that the temperature is located within
+                            $tableWrite = $mysqli->query("INSERT INTO ".$daysOut."dayOutHighTemps (date, temperature, comments) VALUES ('".$loopDate."', '".$todaysTemp."', '' );");
+                        }
+                        $daysOut++;
+                    }
+                    
+                    // Now that the data has been inserted into the tables, a new average and standard deviation can be calculated for each day range category.
+                    
+                    ///*
+                    for ($daysOut = 0; $daysOut < 10; $daysOut++) {
+                    
+                        // Calculate average difference for $daysOut amount of days out: WANT to sum up all instances of measured vs actual temperature
+                        // try and use $todaysTemp instead of having to retrieve it from the database
+                        
+                        // get prediction from $daysOut amount of days ago about today's temperature
+                        //$predictionSQL = "SELECT temperature FROM ".$daysOut."dayOutHighTemps WHERE date = ".date('Y-m-d', strtotime('-'.$daysOut.' days', strtotime( date('Y-m-d') ))).";";
+                        $predictionSQL = "SELECT temperature FROM ".$daysOut."dayOutHighTemps WHERE date = '".date('Y-m-d')."';";
+                        
+                        
+                        if ($predictionQuery = $mysqli->query($predictionSQL)) {
+                            
+                            while ($prow = $predictionQuery->fetch_assoc()) {
+                                //echo "<br>".$predictionSQL."<br>Query ##".$daysOut.":   ".$prow["temperature"];
+                                $predictionTemp = $prow["temperature"];
+                                break;
+                            }
+                            
+                        }
+                        
+                        echo "<br>".$predictionSQL."<br>Query ##".$daysOut.":   ".$predictionTemp; // Testing
+                        
+                        
+                        $newavgSQL = "SELECT datacount, runningsum FROM DaysOutStats WHERE name = ".$daysOut."days;";
+                        if ($avgQuery = $mysqli->query($newavgSQL)) {
+                            
+                            while ($avgrow = $avgQuery->fetch_assoc()) {
+                                $dbcount = $avgrow["datacount"];
+                                $dbsum = $avgrow["runningsum"];
+                                echo "<br>".$newavgSQL."<br>Query ##".$daysOut.":   count:".$avgrow["datacount"]."  sum: ".$avgrow["runningsum"];
+                                //$predictionTemp = $prow["temperature"];
+                                break;
+                            }
+                            
+                        } else {
+                            echo "ELSE REACHED!";
+                            $dbcount = 1; // No divide by 0's
+                            $dbsum = 0;
+                        }
+                        
+                        $dbavg = $dbsum / $dbcount;
+                        echo "<br>Average: ".$dbavg;
+                        $newavg = abs(($dbsum - $predictionTemp) / ++$dbcount);
+                        echo "<br>NEW Average: ".$newavg;
+                        
+                        
+                        $predictionTemp = -5000; // impossible value will flag when tests are no longer producing useful results
+                        
+                    
+                        
+                        // Calculate Average and Standard Deviation from each table
+                        //$tempsQuery = $mysqli->query("SELECT AVG(temperature), STDEV(temperature) AS AvgTemp, StdevTemp FROM ".$daysOut."dayOutHighTemps");
+                        //$row = mysql_fetch_assoc($tempsQuery); 
+                        //$avg = $row['AvgTemp'];
+                        //$stdev = $row['StdevTemp'];
+                        // MAY NEED TO HAVE A SPECIAL CASE FOR WHEN THE TABLE IS EMPTY (first time may not allow update if nothing has been inserted yet)
+                        //$tableWrite = $mysqli->query("UPDATE DaysOutStats SET average = ".$avg." standarddeviation = ".$stdev." WHERE name = ".$daysOut."days;");// Update current values of Avg and Stdev
+                    }
+                    //*/
+                    
+                $mysqli->close();
+                
+                
+                ?>
+            </div>
+            
             </div>
 
         </div>
