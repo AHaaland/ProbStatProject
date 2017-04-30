@@ -125,7 +125,7 @@
                 $countEven = 0;
                 $highTempArray = [];
                 foreach($weekForecast->{'forecastday'} as $dailyData)
-                {
+                {   
                     if($countEven++ %2 != 1)
                     {
                         echo "<div class = 'panel panel-default'><div class ='panel-body'><div class = 'media'><div class = 'media-left media-middle'><img class = 'media-object' src = '".$dailyData->{'icon_url'}."' alt = '".$dailyData->{'icon'}."'></div>" ;
@@ -148,19 +148,24 @@
             <div class="panel-body">
                 <?php //TEST: extraction of High temperature from string for each day
                 
+                //print_r($weatherAry->{'forecast'}->{'simpleforecast'}->{'forecastday'}[0]->{'high'}->{'fahrenheit'});
+                //echo "TODAYS HIGH". $weatherAry->{'forecast'}->{'simpleforecast'}->{'forecastday'}[9]->{'high'}->{'fahrenheit'};
+                
+                
+                
                 // Database setup
                 ini_set('display_errors', 1); error_reporting(-1);
                 //c9 login
-                /*$dbhost = 'localhost';
+                $dbhost = 'localhost';
                 $dbuser = 'n02762252';
                 $dbpass = '12321';
-                $dbDatabase = 'oldForecast';*/
-                
-                $dbhost = 'localhost';
-        $dbuser = 'weatherWonderSaveUser';
-        $dbpass = 'Password$12321*';
-        $dbDatabase = 'weatherWonder';
-        
+                $dbDatabase = 'oldForecast';
+                //My Server
+                /*$dbhost = 'localhost';
+                $dbuser = 'weatherWonderSaveUser';
+                $dbpass = 'Password$12321*';
+                $dbDatabase = 'weatherWonder';
+                */
                 
                 $mysqli = new mysqli($dbhost,$dbuser,$dbpass,$dbDatabase);
         
@@ -168,8 +173,26 @@
                     die("Connection failed: " . $mysqli->connect_error);
                 }
                 
+                // This requires no string manipulation so it's more reliable.
+                for ($daysOut = 0; $daysOut < 10; $daysOut++) {
+                    
+                    // Get high temperature for x days out
+                    $loopHighTemp =  $weatherAry->{'forecast'}->{'simpleforecast'}->{'forecastday'}[$daysOut]->{'high'}->{'fahrenheit'};
+                    echo "HIGH TEMP: ".$loopHighTemp."<br>";
+                    
+                    // Store high temperature into propper table
+                    $loopDate = date('Y-m-d', strtotime('+'.$daysOut.' days', strtotime( date('Y-m-d') )));
+                    $highTempSQL = "INSERT INTO ".$daysOut."dayOutHighTemps (date, temperature, comments) VALUES ('".$loopDate."', '".$loopHighTemp."', '' );";
+                    echo "HIGH TEMP SQL: ".$highTempSQL."<br>";
+                    $tableWrite = $mysqli->query($highTempSQL);
+                    
+                }
                 
                 
+                // Trying to rework this, make it more efficient and intuitive:
+                /*
+                
+                    // Loop will iterate through the strings containing high temperatures for each day and write them to their corresponding tables
                     $daysOut = 0;
                     foreach ($highTempArray as $highTemp)
                     {
@@ -193,6 +216,8 @@
                         }
                         $daysOut++;
                     }
+                    
+                */
                     
                     // Now that the data has been inserted into the tables, a new average and standard deviation can be calculated for each day range category.
                     
