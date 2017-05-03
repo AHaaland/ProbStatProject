@@ -52,7 +52,8 @@
                     <form  id = "zipForm" name = "zipForm" action="/weatherInPhp.php" method = "GET" onsubmit = >
                       <label for="zipCode">Zip Code:</label>
                       <input type="text" class="form-control" name = "zipCode" id="zipCode">
-                      <button type = "submit" id = "zipBTN" class = "btn btn-primary"  style = "margin-top:1em">Submit</button>
+                      <button type = "submit" id = "zipBTN" class = "btn btn-primary"  style = "margin-top:1em">Your Local Forecast</button>
+                      <a href = "predictWeather.php" id = "forecastBTN" class = "btn btn-primary" style = "margin-top:1em">Get Our Prediction</a>
                     </form>
                 </div>
             
@@ -107,8 +108,16 @@
                 {
                     var self = this;
                     $(this).hide().after('<img src = "/Images/sunny.gif" alt = "Loading..." style = "height:25px; width:25px;margin-top:1em">');
+                    $("#forecastBTN").hide();
                 }
             });
+            $("#forecastBTN").on('click',function(e){
+
+                    var self = this;
+                    $("#zipBTN").hide().after('<img src = "/Images/sunny.gif" alt = "Loading..." style = "height:25px; width:25px;margin-top:1em">');
+                    $("#forecastBTN").hide();
+            });
+            
         </script>
     </body>
 </html>

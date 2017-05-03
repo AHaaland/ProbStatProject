@@ -14,11 +14,11 @@
             <li ><a href="index.php">Home</a></li>
             <li><a href="historicalDump.php">History Dump</a></li>
           </ul>
-          <div class="navbar-right">
+          <!--<div class="navbar-right">
               <p class="navbar-text ">Hello, Guest!</p>
                <Button id = "logBTN" type="submit" class="btn btn-primary navbar-btn pull-left" data-toggle="modal" data-target="#loginModal" role="login">Sign In</Button> 
                 <p class="navbar-text">or <a href="signup.php">Sign up today!</a></p>
-          </div>
+          </div>-->
           </div>
         </div>
         </nav>
