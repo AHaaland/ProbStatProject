@@ -73,7 +73,7 @@
 
         
                 for ($x = 1; $x < count($twoDTemps[0]); $x++) {
-                    echo "<div class = 'panel panel-default'> <div class ='panel-body'> Day $x Prediction: ".$twoDTemps[0][$x]."&deg; F Accuracy: ".round(((erf((($ad[$x]+1 / $x) - $ad[$x]) / $sdd[$x]))*100),3)."%</div></div>";
+                    echo "<div class = 'panel panel-default col-md-6 col-xs-6'> <div class ='panel-body'> Day $x Prediction: ".$twoDTemps[0][$x]."&deg; F</div></div><div class = 'panel panel-default col-md-6 col-xs-6'> <div class ='panel-body'> Accuracy: ".round(((erf((($ad[$x]+1 / $x) - $ad[$x]) / $sdd[$x]))*100),3)."%</div></div>";
                 }
     
                     
