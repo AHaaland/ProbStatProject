@@ -49,11 +49,11 @@
             </div>
             <!-- Removing 'name' attribute will force the field to not be submitted! -->
                 <div class="control-group form-horizontal col-md-offset-5 col-xs-offset-3 col-md-2 col-xs-6" id="zipDiv">
-                    <form  id = "zipForm" name = "zipForm" action="/weatherInPhp.php" method = "GET" onsubmit = >
+                    <form  id = "zipForm" name = "zipForm" action="/weathunder.php" method = "GET" onsubmit = >
                       <label for="zipCode">Zip Code:</label>
                       <input type="text" class="form-control" name = "zipCode" id="zipCode">
-                      <button type = "submit" id = "zipBTN" class = "btn btn-primary"  style = "margin-top:1em">Your Local Forecast</button>
-                      <a href = "predictWeather.php" id = "forecastBTN" class = "btn btn-primary" style = "margin-top:1em">Get Our Prediction</a>
+                      <button type = "submit" id = "zipBTN" class = "btn btn-primary"  style = "margin-top:1em">Your WeatherUnderground Forecast</button>
+                      <button type = "submit" id = "forecastBTN" formaction = "/weathnws.php" class = "btn btn-primary" style = "margin-top:1em">Get Your NWS Forecast</a>
                     </form>
                 </div>
             
